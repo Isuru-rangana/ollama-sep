@@ -4,6 +4,7 @@ container:
   docker:
     context: .
     dockerfile: Dockerfile
+    target: final
   ports:
     - port: 11434
       name: ollama
