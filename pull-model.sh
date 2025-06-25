@@ -2,7 +2,7 @@
 
 # Create necessary directories with correct permissions
 mkdir -p /home/ollama/.ollama
-chown -R ollama:ollama /home/ollama/.ollama
+chown -R 10014:10014 /home/ollama/.ollama
 
 # Start Ollama in the background
 ollama serve &

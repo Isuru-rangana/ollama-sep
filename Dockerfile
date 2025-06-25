@@ -14,18 +14,19 @@ RUN chmod +x /app/pull-model.sh
 
 FROM builder as final
 
-# Create a non-root user
-RUN groupadd -r ollama && useradd -r -g ollama -s /bin/bash -d /home/ollama ollama \
-    && mkdir -p /home/ollama \
-    && chown -R ollama:ollama /home/ollama
+# Create a non-root user with specific UID and GID in Choreo's required range
+RUN groupadd -g 10014 ollama && \
+    useradd -u 10014 -g ollama -s /bin/bash -d /home/ollama ollama && \
+    mkdir -p /home/ollama && \
+    chown -R 10014:10014 /home/ollama
 
 # Set working directory and permissions
 WORKDIR /app
 COPY --from=builder /app/pull-model.sh /app/
-RUN chown -R ollama:ollama /app
+RUN chown -R 10014:10014 /app
 
-# Switch to non-root user
-USER ollama
+# Switch to non-root user with specific UID
+USER 10014
 
 # Expose Ollama port
 EXPOSE 11434
