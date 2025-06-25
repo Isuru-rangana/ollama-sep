@@ -14,11 +14,18 @@ RUN chmod +x /app/pull-model.sh
 
 FROM builder as final
 
-# Set working directory
-WORKDIR /app
+# Create a non-root user
+RUN groupadd -r ollama && useradd -r -g ollama -s /bin/bash -d /home/ollama ollama \
+    && mkdir -p /home/ollama \
+    && chown -R ollama:ollama /home/ollama
 
-# Copy files from builder
+# Set working directory and permissions
+WORKDIR /app
 COPY --from=builder /app/pull-model.sh /app/
+RUN chown -R ollama:ollama /app
+
+# Switch to non-root user
+USER ollama
 
 # Expose Ollama port
 EXPOSE 11434
