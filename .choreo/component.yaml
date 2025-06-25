@@ -1,0 +1,23 @@
+componentName: "ollama-deepseek"
+buildPreset: "Docker"
+projectType: "Container"
+deploymentType: "Container"
+description: "Ollama with DeepSeek Coder model deployment"
+repository: "https://github.com/Isuru-rangana/ollama-sep.git"
+branch: "main"
+envVars: []
+containerResources:
+  requests:
+    memory: "8Gi"
+    cpu: "4"
+  limits:
+    memory: "16Gi"
+    cpu: "8"
+  gpu:
+    enabled: true
+    count: 1
+ports:
+  - name: ollama
+    port: 11434
+    protocol: TCP
+    servicePort: 11434 

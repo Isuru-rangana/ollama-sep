@@ -1,0 +1,23 @@
+version: 1.0.0
+type: Container
+container:
+  docker:
+    context: .
+    dockerfile: Dockerfile
+  ports:
+    - port: 11434
+      name: ollama
+      protocol: TCP
+  resources:
+    memory:
+      required: "8Gi"
+    cpu:
+      required: "4"
+    gpu:
+      required: true
+endpoints:
+  - name: ollama-api
+    port: 11434
+    type: REST
+    context: /
+    visibility: Project 
